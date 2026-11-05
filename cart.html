@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Shopping Cart - Week 7</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>🛒 Shopping Cart</h1>
+            <a href="index.html">← Back to To-Do List</a>
+            <p>
+                Cart: <span id="cart-count">0</span> items | Total: $<span
+                    id="cart-total"
+                    >0.00</span
+                >
+            </p>
+        </header>
+
+        <main>
+            <h2>Products</h2>
+            <div id="product-list"></div>
+
+            <h2>Your Cart</h2>
+            <ul id="cart-list"></ul>
+            <button id="clear-cart">Clear Cart</button>
+        </main>
+
+        <script type="module">
+            import { save, load } from './src/storage.js';
+
+            const PRODUCTS = [
+                { id: '1', name: 'Laptop', price: 999.99, image: '💻' },
+                { id: '2', name: 'Phone', price: 499.99, image: '📱' },
+                { id: '3', name: 'Headphones', price: 89.99, image: '🎧' },
+            ];
+
+            let cart = load('cart', []);
+
+            function saveCart() {
+                save('cart', cart);
+                render();
+            }
+
+            function render() {
+                const productList = document.getElementById('product-list');
+                productList.innerHTML = '';
+                PRODUCTS.forEach((p) => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `<span>${p.image} ${p.name} - $${p.price}</span> <button>Add to Cart</button>`;
+                    div.querySelector('button').addEventListener(
+                        'click',
+                        () => {
+                            const existing = cart.find(
+                                (item) => item.id === p.id
+                            );
+                            if (existing) {
+                                existing.quantity += 1;
+                            } else {
+                                cart.push({ ...p, quantity: 1 });
+                            }
+                            saveCart();
+                        }
+                    );
+                    productList.appendChild(div);
+                });
+
+                const cartList = document.getElementById('cart-list');
+                cartList.innerHTML = '';
+                let total = 0;
+                let count = 0;
+                cart.forEach((item) => {
+                    total += item.price * item.quantity;
+                    count += item.quantity;
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${item.image} ${item.name} x ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}</span>`;
+                    const minus = document.createElement('button');
+                    minus.textContent = '-';
+                    minus.addEventListener('click', () => {
+                        item.quantity -= 1;
+                        if (item.quantity <= 0) {
+                            cart = cart.filter((i) => i.id !== item.id);
+                        }
+                        saveCart();
+                    });
+                    const plus = document.createElement('button');
+                    plus.textContent = '+';
+                    plus.addEventListener('click', () => {
+                        item.quantity += 1;
+                        saveCart();
+                    });
+                    const remove = document.createElement('button');
+                    remove.textContent = 'Remove';
+                    remove.addEventListener('click', () => {
+                        cart = cart.filter((i) => i.id !== item.id);
+                        saveCart();
+                    });
+                    li.append(minus, plus, remove);
+                    cartList.appendChild(li);
+                });
+
+                document.getElementById('cart-count').textContent = count;
+                document.getElementById('cart-total').textContent =
+                    total.toFixed(2);
+            }
+
+            document
+                .getElementById('clear-cart')
+                .addEventListener('click', () => {
+                    cart = [];
+                    saveCart();
+                });
+            render();
+        </script>
+    </body>
+</html>

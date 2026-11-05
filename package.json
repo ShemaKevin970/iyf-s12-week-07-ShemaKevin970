@@ -1,0 +1,32 @@
+{
+    "name": "iyf-s12-week-07-shemakevin970",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "vitest run",
+        "lint": "eslint src/",
+        "lint:fix": "eslint src/ --fix",
+        "format": "prettier --write ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ShemaKevin970/iyf-s12-week-07-ShemaKevin970.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ShemaKevin970/iyf-s12-week-07-ShemaKevin970/issues"
+    },
+    "homepage": "https://github.com/ShemaKevin970/iyf-s12-week-07-ShemaKevin970#readme",
+    "devDependencies": {
+        "eslint": "^10.14.0",
+        "prettier": "^3.9.10",
+        "vitest": "^5.1.0"
+    },
+    "dependencies": {
+        "acorn": "^8.14.0"
+    }
+}

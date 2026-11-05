@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Week 7 - To-Do List</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header>
+            <h1>My To-Do List</h1>
+            <button id="theme-toggle">🌙 Dark Mode</button>
+            <a href="cart.html">🛒 Shopping Cart</a>
+        </header>
+
+        <main>
+            <form id="todo-form">
+                <input
+                    id="todo-input"
+                    type="text"
+                    placeholder="What needs to be done?"
+                    autocomplete="off"
+                />
+                <button type="submit">Add</button>
+            </form>
+
+            <div class="filters">
+                <button data-filter="all" class="filter-btn active">All</button>
+                <button data-filter="active" class="filter-btn">Active</button>
+                <button data-filter="completed" class="filter-btn">
+                    Completed
+                </button>
+            </div>
+
+            <ul id="todo-list"></ul>
+            <p id="todo-count"></p>
+            <button id="clear-completed">Clear Completed</button>
+        </main>
+
+        <script type="module" src="src/app.js"></script>
+    </body>
+</html>
