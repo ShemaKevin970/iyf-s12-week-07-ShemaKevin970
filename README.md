@@ -17,3 +17,4 @@ npm test
 npm run lint
 npm run format
 ```
+Reviewed by peer - Week 7 complete.
